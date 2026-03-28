@@ -104,9 +104,21 @@ const galleryImages = [
   { src: '/img/snow-trek.jpeg',      title: 'Senderismo en la nieve',     desc: 'Explorando los picos nevados del Nevado del Ruiz' },
   { src: '/img/guide-horse.jpeg',    title: 'Preparando la cabalgata',    desc: 'El guía ajustando el equipo con nevado de fondo' },
   { src: '/img/paramo-fence.jpeg',   title: 'Cercas del páramo',          desc: 'El valle visto desde lo alto de la finca' },
-  { src: '/img/trout-drying.jpeg',   title: 'Truchas campesinas',         desc: 'Gastronomía tradicional de la región' },
-  { src: '/img/kitchen.jpeg',        title: 'Cocina campesina',           desc: 'Cocinando con vista directa al páramo' },
-  { src: '/img/spring.jpeg',         title: 'Fuente artesanal',           desc: 'Agua pura de la montaña' },
+  { src: '/img/trout-drying.jpeg',      title: 'Truchas campesinas',              desc: 'Gastronomía tradicional de la región' },
+  { src: '/img/kitchen.jpeg',           title: 'Cocina campesina',                desc: 'Cocinando con vista directa al páramo' },
+  { src: '/img/spring.jpeg',            title: 'Fuente artesanal',                desc: 'Agua pura de la montaña' },
+  // Nuevas imágenes img2
+  { src: '/img/horse-nevado.jpeg',      title: 'Desde el lomo del caballo',       desc: 'El Nevado del Ruiz visto en cabalgata' },
+  { src: '/img/dawn-valley.jpeg',       title: 'Amanecer dorado',                 desc: 'El valle nevado iluminado al amanecer' },
+  { src: '/img/dawn-snow-cabin.jpeg',   title: 'Cabaña en la nieve',              desc: 'Amanecer invernal sobre la finca' },
+  { src: '/img/nevado-blue.jpeg',       title: 'Nevado del Ruiz',                 desc: 'Cielo azul despejado sobre el glaciar' },
+  { src: '/img/nevado-panoramic.jpeg',  title: 'Panorámica del nevado',           desc: 'Vista de los picos nevados del volcán' },
+  { src: '/img/horses-valley.jpeg',     title: 'Caballos en el valle',            desc: 'Vida campesina bajo el cielo del páramo' },
+  { src: '/img/hiker-overview.jpeg',    title: 'Vista a la finca',                desc: 'Turista contemplando la cabaña y laguna' },
+  { src: '/img/peak-clouds.jpeg',       title: 'Pico entre las nubes',            desc: 'Dramáticas nubes sobre los picos del páramo' },
+  { src: '/img/aerial-frailejon.jpeg',  title: 'Vista aérea con frailejones',     desc: 'La finca vista desde los frailejones' },
+  { src: '/img/hiker-frailejones2.jpeg',title: 'Senderista entre frailejones',    desc: 'Explorando la pared rocosa del páramo' },
+  { src: '/img/frailejon-closeup.jpeg', title: 'Frailejón en primer plano',       desc: 'La planta insignia del páramo colombiano' },
 ];
 ---
 
@@ -250,9 +262,9 @@ const galleryImages = [
     >
       <div class="absolute inset-0 z-0">
         <img
-          src="/img/nevado-ruiz.jpeg"
-          alt="El Nevado del Ruiz visto desde el páramo de frailejones"
-          class="w-full h-full object-cover object-center"
+          src="/img/horse-nevado.jpeg"
+          alt="Cabalgata hacia el Nevado del Ruiz entre frailejones"
+          class="w-full h-full object-cover object-[center_40%]"
         />
         <div
           class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/45 to-black/85"
@@ -422,8 +434,8 @@ const galleryImages = [
           >
           </div>
           <img
-            src="/img/cabin.jpeg"
-            alt="Cabaña Los Páramos de Dios rodeada de montañas"
+            src="/img/hiker-overview.jpeg"
+            alt="Vista del páramo con la cabaña y laguna desde las alturas"
             loading="lazy"
             class="rounded-2xl shadow-2xl w-full object-cover h-[480px] md:h-[560px]"
           />
@@ -494,6 +506,90 @@ const galleryImages = [
             </svg>
             Consultar disponibilidad
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SEPARADOR VISUAL — FRASE + IMAGEN AMANECER
+    ═══════════════════════════════════════════════ -->
+    <div class="relative h-[360px] md:h-[480px] overflow-hidden">
+      <img
+        src="/img/dawn-valley.jpeg"
+        alt="Amanecer dorado sobre el valle nevado del páramo"
+        loading="lazy"
+        class="w-full h-full object-cover object-center scale-105"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-green-950/60 via-black/50 to-green-950/70"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+        <span class="text-green-400 text-xs font-semibold uppercase tracking-[0.25em] mb-5">
+          Nevado del Ruiz · Manizales
+        </span>
+        <blockquote class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-4xl">
+          "El páramo no se visita,<br />
+          <em class="text-green-400 not-italic">se vive."</em>
+        </blockquote>
+        <p class="text-white/50 mt-6 text-sm tracking-widest uppercase">
+          Los Páramos de Dios
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         PAISAJES — strip de fotos panorámicas nuevas
+    ═══════════════════════════════════════════════ -->
+    <section class="bg-stone-900 py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-10">
+          <span class="inline-block text-green-400 font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+            Diferentes épocas, misma magia
+          </span>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
+            El páramo en todos sus estados
+          </h2>
+        </div>
+        <!-- Strip horizontal de 4 fotos recortadas iguales -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { src: '/img/horse-nevado.jpeg',   label: 'Cabalgata' },
+            { src: '/img/horses-valley.jpeg',  label: 'Vida campesina' },
+            { src: '/img/nevado-blue.jpeg',    label: 'Día soleado' },
+            { src: '/img/peak-clouds.jpeg',    label: 'Cielo dramático' },
+          ].map(item => (
+            <div class="relative overflow-hidden rounded-xl group">
+              <img
+                src={item.src}
+                alt={item.label}
+                loading="lazy"
+                class="w-full h-48 md:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-white text-sm font-semibold">{item.label}</span>
+            </div>
+          ))}
+        </div>
+        <!-- Segunda fila: frailejones de primer plano + panorámica aérea -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+          <div class="relative overflow-hidden rounded-xl group md:col-span-1">
+            <img
+              src="/img/frailejon-closeup.jpeg"
+              alt="Frailejón en primer plano"
+              loading="lazy"
+              class="w-full h-48 md:h-56 object-cover object-center group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white text-sm font-semibold">Frailejones centenarios</span>
+          </div>
+          <div class="relative overflow-hidden rounded-xl group md:col-span-2">
+            <img
+              src="/img/aerial-frailejon.jpeg"
+              alt="Vista aérea de la finca con frailejones"
+              loading="lazy"
+              class="w-full h-48 md:h-56 object-cover object-center group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 text-white text-sm font-semibold">Vista panorámica de la finca</span>
+          </div>
         </div>
       </div>
     </section>
@@ -668,8 +764,8 @@ const galleryImages = [
     <section id="contacto" class="relative py-28 md:py-40 overflow-hidden">
       <div class="absolute inset-0 z-0">
         <img
-          src="/img/nevado-ruiz.jpeg"
-          alt="El Nevado del Ruiz visto desde el páramo"
+          src="/img/dawn-snow-cabin.jpeg"
+          alt="Amanecer nevado sobre el páramo con la cabaña"
           class="w-full h-full object-cover object-center"
         />
         <div class="absolute inset-0 bg-green-950/88"></div>
