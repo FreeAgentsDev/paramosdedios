@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example

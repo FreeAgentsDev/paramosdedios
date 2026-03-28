@@ -1,0 +1,904 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// ⚠️ REEMPLAZA ESTE NÚMERO con el número real de WhatsApp del negocio
+// Formato: código de país + número (sin +, espacios ni guiones)
+// Ejemplo Colombia: 573101234567  →  57 (Colombia) + 310 1234567
+const WHATSAPP_NUMBER = '573001234567';
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  '¡Hola! 👋 Me interesa conocer más sobre Los Páramos de Dios. ¿Podría darme información sobre las experiencias y precios disponibles?'
+);
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+
+const navLinks = [
+  { href: '#nosotros', label: 'Nosotros' },
+  { href: '#experiencias', label: 'Experiencias' },
+  { href: '#galeria', label: 'Galería' },
+  { href: '#contacto', label: 'Contacto' },
+];
+
+const experiences = [
+  {
+    emoji: '🐴',
+    badge: 'Aventura',
+    title: 'Cabalgata por el Páramo',
+    description:
+      'Recorre los senderos únicos del páramo a caballo, entre frailejones centenarios y vistas espectaculares hacia el Nevado del Ruiz.',
+  },
+  {
+    emoji: '🌿',
+    badge: 'Naturaleza',
+    title: 'Senderismo Ecológico',
+    description:
+      'Explora a pie la biodiversidad única del páramo, uno de los ecosistemas más valiosos y biodiversos del planeta.',
+  },
+  {
+    emoji: '🏠',
+    badge: 'Hospedaje',
+    title: 'Alojamiento Rústico',
+    description:
+      'Descansa en nuestra cabaña tradicional en pleno páramo. Una experiencia auténtica de vida campesina a más de 3.900 msnm.',
+  },
+  {
+    emoji: '🍲',
+    badge: 'Cultura',
+    title: 'Gastronomía Campesina',
+    description:
+      'Saborea comida típica de la región, preparada con productos frescos y recetas tradicionales directamente en el páramo.',
+  },
+];
+
+const features = [
+  {
+    icon: '🌿',
+    title: 'Ecosistema Único',
+    desc: 'Páramo en área protegida del Nevado del Ruiz, joya natural de Colombia',
+  },
+  {
+    icon: '🐴',
+    title: 'Guías Nativos',
+    desc: 'Nacidos y criados en el páramo con décadas de experiencia local',
+  },
+  {
+    icon: '🏔️',
+    title: '+3.900 msnm',
+    desc: 'Altitud excepcional con vistas únicas hacia el Nevado del Ruiz',
+  },
+  {
+    icon: '♻️',
+    title: 'Turismo Sostenible',
+    desc: 'Comprometidos con el cuidado y preservación del ecosistema',
+  },
+  {
+    icon: '🍲',
+    title: '100% Auténtico',
+    desc: 'Comida y tradiciones campesinas genuinas de Manizales y Caldas',
+  },
+  {
+    icon: '📱',
+    title: 'Atención Directa',
+    desc: 'Reservas y consultas directamente por WhatsApp, sin intermediarios',
+  },
+];
+
+const galleryImages = [
+  { src: '/img/nevado-ruiz.jpeg',    title: 'El Nevado del Ruiz',         desc: 'Vista panorámica desde el páramo de frailejones' },
+  { src: '/img/hiker-valley.jpeg',   title: 'Mirando el valle',           desc: 'La cabaña desde las alturas del páramo' },
+  { src: '/img/hero.jpeg',           title: 'Cabalgata por el páramo',    desc: 'Entre frailejones y montañas del Nevado del Ruiz' },
+  { src: '/img/frailejon-lake.jpeg', title: 'Laguna de frailejones',      desc: 'Ecosistema único y biodiverso del páramo' },
+  { src: '/img/valley-aerial.jpeg',  title: 'Valle del páramo',           desc: 'Paisaje de la finca desde las alturas' },
+  { src: '/img/group-hikers.jpeg',   title: 'Grupo de senderistas',       desc: 'Aventureros listos para explorar el páramo' },
+  { src: '/img/caravan-snow.jpeg',   title: 'Caravana en la nieve',       desc: 'Expedición guiada entre frailejones nevados' },
+  { src: '/img/aerial-cabin.jpeg',   title: 'La cabaña y la laguna',      desc: 'Vista aérea de las instalaciones' },
+  { src: '/img/cabin.jpeg',          title: 'Cabaña en el páramo',        desc: 'Refugio rústico rodeado de montañas' },
+  { src: '/img/river-mountains.jpeg',title: 'Río del páramo',             desc: 'Aguas cristalinas entre montañas y pedregal' },
+  { src: '/img/horseback-snow.jpeg', title: 'Cabalgata en la nieve',      desc: 'Explorando la alta montaña a caballo' },
+  { src: '/img/cabin2.jpeg',         title: 'Finca en el páramo',         desc: 'Instalaciones campesinas con el pico al fondo' },
+  { src: '/img/cabin-valley.jpeg',   title: 'Cabaña y laguna',            desc: 'Refugio con lagunas naturales' },
+  { src: '/img/frailejon-hiker.jpeg',title: 'Entre frailejones',          desc: 'Senderismo entre los gigantes del páramo' },
+  { src: '/img/valley-horses.jpeg',  title: 'Valle con caballos',         desc: 'Ganadería campesina del páramo' },
+  { src: '/img/cattle-cabin.jpeg',   title: 'Ganado en el páramo',        desc: 'Vida campesina auténtica en el Nevado del Ruiz' },
+  { src: '/img/cowboy-mule.jpeg',    title: 'Campesino en mula',          desc: 'Cultura campesina con ruana blanca en la nieve' },
+  { src: '/img/snow-landscape.jpeg', title: 'Paisaje nevado',             desc: 'La alta montaña cubierta de nieve y frailejones' },
+  { src: '/img/valley-cabin.jpeg',   title: 'Valle del páramo',           desc: 'Vista panorámica del recorrido a pie' },
+  { src: '/img/snow-trek.jpeg',      title: 'Senderismo en la nieve',     desc: 'Explorando los picos nevados del Nevado del Ruiz' },
+  { src: '/img/guide-horse.jpeg',    title: 'Preparando la cabalgata',    desc: 'El guía ajustando el equipo con nevado de fondo' },
+  { src: '/img/paramo-fence.jpeg',   title: 'Cercas del páramo',          desc: 'El valle visto desde lo alto de la finca' },
+  { src: '/img/trout-drying.jpeg',   title: 'Truchas campesinas',         desc: 'Gastronomía tradicional de la región' },
+  { src: '/img/kitchen.jpeg',        title: 'Cocina campesina',           desc: 'Cocinando con vista directa al páramo' },
+  { src: '/img/spring.jpeg',         title: 'Fuente artesanal',           desc: 'Agua pura de la montaña' },
+];
+---
+
+<Layout>
+  <!-- ═══════════════════════════════════════════════
+       BOTÓN FLOTANTE WHATSAPP
+  ═══════════════════════════════════════════════ -->
+  <a
+    href={WHATSAPP_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contactar por WhatsApp"
+    class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white pl-4 pr-5 py-3.5 rounded-full shadow-2xl shadow-green-500/40 transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 group"
+  >
+    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+      ></path>
+    </svg>
+    <span class="font-semibold text-sm hidden sm:inline">Reservar ahora</span>
+  </a>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════ -->
+  <nav
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 bg-transparent"
+  >
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between gap-4">
+      <!-- Logo -->
+      <a href="#inicio" class="font-serif leading-tight text-white flex-shrink-0">
+        <span class="block text-lg font-bold">Los Páramos</span>
+        <span class="block text-sm font-normal text-green-400 -mt-0.5">de Dios</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="hidden md:flex items-center gap-8">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-white/80 hover:text-white text-sm font-medium transition-colors tracking-wide"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Desktop WA button -->
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-300 flex-shrink-0"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+          ></path>
+        </svg>
+        WhatsApp
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button
+        id="menu-btn"
+        class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+        aria-label="Abrir menú"
+      >
+        <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          id="icon-close"
+          class="w-6 h-6 hidden"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden bg-green-950/98 backdrop-blur-md border-t border-white/10"
+    >
+      <ul class="px-6 py-5 space-y-1">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="block text-white/80 hover:text-white hover:bg-white/5 py-3 px-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="pt-3 border-t border-white/10">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-semibold px-5 py-3 rounded-full"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+              ></path>
+            </svg>
+            Contactar por WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════ -->
+    <section
+      id="inicio"
+      class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/img/nevado-ruiz.jpeg"
+          alt="El Nevado del Ruiz visto desde el páramo de frailejones"
+          class="w-full h-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/45 to-black/85"
+        >
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-green-950/50 to-transparent"></div>
+      </div>
+
+      <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto pt-24 pb-20">
+        <div
+          class="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 text-sm mb-8 text-white/90"
+        >
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse flex-shrink-0"></span>
+          🏔️ Nevado del Ruiz · Manizales, Colombia
+        </div>
+
+        <h1 class="font-serif font-bold leading-[1.05] mb-5">
+          <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl">Los Páramos</span>
+          <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-green-400"
+            >de Dios</span
+          >
+        </h1>
+
+        <p class="font-serif italic text-xl md:text-2xl text-white/70 mb-12 font-light">
+          "Donde la naturaleza habla y el alma escucha"
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-0.5 text-base"
+          >
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+              ></path>
+            </svg>
+            Reservar por WhatsApp
+          </a>
+          <a
+            href="#experiencias"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/40 hover:bg-white/10 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 text-base"
+          >
+            Ver experiencias
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-white/40 animate-bounce"
+      >
+        <span class="text-xs tracking-wider uppercase">Desliza</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         STATS BAR
+    ═══════════════════════════════════════════════ -->
+    <div class="bg-green-950 py-10 border-y border-green-900/60">
+      <div class="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="font-serif text-3xl md:text-4xl font-bold text-green-400">+3.900</div>
+          <div class="text-white/50 text-sm mt-1">metros sobre el nivel del mar</div>
+        </div>
+        <div>
+          <div class="font-serif text-3xl md:text-4xl font-bold text-green-400">100%</div>
+          <div class="text-white/50 text-sm mt-1">naturaleza auténtica</div>
+        </div>
+        <div>
+          <div class="font-serif text-3xl md:text-4xl font-bold text-green-400">4</div>
+          <div class="text-white/50 text-sm mt-1">experiencias únicas</div>
+        </div>
+        <div>
+          <div class="font-serif text-3xl md:text-4xl font-bold text-green-400">∞</div>
+          <div class="text-white/50 text-sm mt-1">paisajes inolvidables</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         NOSOTROS
+    ═══════════════════════════════════════════════ -->
+    <section id="nosotros" class="py-24 md:py-32 bg-stone-50">
+      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <span
+            class="inline-block text-green-700 font-semibold text-xs uppercase tracking-[0.2em] mb-4"
+            >Nuestra historia</span
+          >
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-green-950 leading-tight mb-6">
+            Un refugio en el<br />corazón del páramo
+          </h2>
+          <p class="text-stone-600 text-lg leading-relaxed mb-5">
+            Los Páramos de Dios es una experiencia turística auténtica ubicada en el corazón del
+            Nevado del Ruiz, en Manizales, Caldas. Ofrecemos una conexión genuina con la naturaleza,
+            la cultura campesina y los paisajes únicos del páramo colombiano.
+          </p>
+          <p class="text-stone-600 text-lg leading-relaxed mb-8">
+            Nuestros guías locales, nacidos y criados en estas tierras, te llevarán a explorar uno
+            de los ecosistemas más únicos y biodiversos del planeta, a más de 3.900 metros sobre el
+            nivel del mar.
+          </p>
+          <ul class="space-y-3">
+            {
+              [
+                'Guías locales con décadas de experiencia',
+                'Experiencia 100% auténtica y responsable',
+                'Alojamiento en cabaña tradicional del páramo',
+                'Gastronomía campesina de la región',
+              ].map((item) => (
+                <li class="flex items-start gap-3 text-stone-700">
+                  <svg
+                    class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-10">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-green-800 hover:bg-green-700 text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300"
+            >
+              Preguntarnos por WhatsApp
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div
+            class="absolute -inset-4 bg-gradient-to-br from-green-200 to-emerald-100 rounded-3xl -z-10"
+          >
+          </div>
+          <img
+            src="/img/cabin.jpeg"
+            alt="Cabaña Los Páramos de Dios rodeada de montañas"
+            loading="lazy"
+            class="rounded-2xl shadow-2xl w-full object-cover h-[480px] md:h-[560px]"
+          />
+          <div
+            class="absolute -bottom-5 -left-5 bg-green-950 text-white rounded-2xl p-5 shadow-xl"
+          >
+            <div class="font-serif text-2xl font-bold text-green-400">+3.900</div>
+            <div class="text-white/60 text-xs mt-0.5">metros sobre el nivel del mar</div>
+          </div>
+          <div class="absolute -top-4 -right-4 bg-amber-900 text-white rounded-xl px-4 py-2 text-sm font-semibold shadow-lg">
+            🌿 Área protegida
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         EXPERIENCIAS
+    ═══════════════════════════════════════════════ -->
+    <section id="experiencias" class="py-24 md:py-32 bg-green-950">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span
+            class="inline-block text-green-400 font-semibold text-xs uppercase tracking-[0.2em] mb-4"
+            >Lo que ofrecemos</span
+          >
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight">
+            Experiencias únicas<br />en el páramo
+          </h2>
+          <p class="text-white/50 mt-5 max-w-xl mx-auto text-lg">
+            Cada visita a Los Páramos de Dios es una aventura diferente, diseñada para conectarte
+            con lo más auténtico de la naturaleza colombiana.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5">
+          {
+            experiences.map((exp) => (
+              <div class="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-green-400/30 rounded-2xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 group">
+                <div class="flex items-start gap-5">
+                  <div class="text-4xl flex-shrink-0 mt-1">{exp.emoji}</div>
+                  <div>
+                    <span class="text-green-400 text-xs font-semibold uppercase tracking-widest">
+                      {exp.badge}
+                    </span>
+                    <h3 class="font-serif text-xl font-bold text-white mt-1.5 mb-3">
+                      {exp.title}
+                    </h3>
+                    <p class="text-white/55 leading-relaxed text-sm">{exp.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg shadow-green-500/20 hover:-translate-y-0.5"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+              ></path>
+            </svg>
+            Consultar disponibilidad
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         GALERÍA
+    ═══════════════════════════════════════════════ -->
+    <section id="galeria" class="py-24 md:py-32 bg-green-950">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+          <span
+            class="inline-block text-green-400 font-semibold text-xs uppercase tracking-[0.2em] mb-4"
+            >Imágenes reales</span
+          >
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight">
+            El páramo en todo<br />su esplendor
+          </h2>
+          <p class="text-white/50 mt-4 max-w-lg mx-auto leading-relaxed">
+            {galleryImages.length} fotografías originales del lugar. Sin filtros ni edición — lo
+            que ves es lo que vas a vivir.
+          </p>
+        </div>
+
+        <!-- Masonry con CSS columns -->
+        <div class="columns-2 md:columns-3 xl:columns-4 gap-3 md:gap-4">
+          {
+            galleryImages.map((img, idx) => (
+              <button
+                data-lightbox-idx={idx}
+                data-lightbox-src={img.src}
+                data-lightbox-title={img.title}
+                data-lightbox-desc={img.desc}
+                aria-label={`Ver foto: ${img.title}`}
+                class="block w-full break-inside-avoid mb-3 md:mb-4 overflow-hidden rounded-xl group relative cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 text-left"
+              >
+                <img
+                  src={img.src}
+                  alt={img.title}
+                  loading="lazy"
+                  class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="absolute bottom-3 left-3 right-8">
+                    <p class="text-white text-xs font-semibold leading-snug line-clamp-1">
+                      {img.title}
+                    </p>
+                    <p class="text-white/60 text-xs leading-snug line-clamp-1 mt-0.5">
+                      {img.desc}
+                    </p>
+                  </div>
+                </div>
+                <div class="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg
+                    class="w-3.5 h-3.5 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                    />
+                  </svg>
+                </div>
+              </button>
+            ))
+          }
+        </div>
+
+        <p class="text-center text-white/30 text-sm mt-8 italic">
+          📸 Haz clic en cualquier foto para verla en pantalla completa
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         LIGHTBOX MODAL
+    ═══════════════════════════════════════════════ -->
+    <div
+      id="lightbox"
+      class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm hidden items-center justify-center p-4 md:p-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Visor de imágenes"
+    >
+      <!-- Cerrar -->
+      <button
+        id="lb-close"
+        aria-label="Cerrar visor"
+        class="absolute top-4 right-4 md:top-5 md:right-5 z-10 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Anterior -->
+      <button
+        id="lb-prev"
+        aria-label="Imagen anterior"
+        class="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 z-10 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Siguiente -->
+      <button
+        id="lb-next"
+        aria-label="Imagen siguiente"
+        class="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-10 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Imagen y caption -->
+      <div class="flex flex-col items-center gap-4 max-w-5xl w-full">
+        <img
+          id="lb-img"
+          src=""
+          alt=""
+          class="max-h-[75vh] max-w-full object-contain rounded-xl shadow-2xl"
+        />
+        <div class="text-center">
+          <p id="lb-title" class="text-white font-semibold text-base md:text-lg"></p>
+          <p id="lb-desc" class="text-white/55 text-sm mt-1"></p>
+          <p id="lb-counter" class="text-white/25 text-xs mt-2"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         POR QUÉ ELEGIRNOS
+    ═══════════════════════════════════════════════ -->
+    <section class="py-24 md:py-32 bg-white">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span
+            class="inline-block text-green-700 font-semibold text-xs uppercase tracking-[0.2em] mb-4"
+            >Por qué elegirnos</span
+          >
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-green-950 leading-tight">
+            Una experiencia que<br />no olvidarás
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            features.map((f) => (
+              <div class="bg-stone-50 hover:bg-green-50 border border-stone-200 hover:border-green-200 rounded-2xl p-6 transition-all duration-300 group">
+                <div class="text-3xl mb-4">{f.icon}</div>
+                <h3 class="font-serif text-lg font-bold text-green-950 mb-2">{f.title}</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">{f.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         CTA FINAL
+    ═══════════════════════════════════════════════ -->
+    <section id="contacto" class="relative py-28 md:py-40 overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/img/nevado-ruiz.jpeg"
+          alt="El Nevado del Ruiz visto desde el páramo"
+          class="w-full h-full object-cover object-center"
+        />
+        <div class="absolute inset-0 bg-green-950/88"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/70 to-green-950/80"
+        >
+        </div>
+      </div>
+
+      <div class="relative z-10 max-w-3xl mx-auto text-center px-6">
+        <span
+          class="inline-block text-green-400 font-semibold text-xs uppercase tracking-[0.2em] mb-6"
+          >¿Listo para la aventura?</span
+        >
+        <h2 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          Vive el páramo.<br />Siente Colombia.
+        </h2>
+        <p class="text-white/60 text-lg md:text-xl mb-10 leading-relaxed max-w-xl mx-auto">
+          Contáctanos por WhatsApp y planifica tu experiencia en Los Páramos de Dios. Nuestros
+          guías locales están listos para acompañarte.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-10 py-5 rounded-full text-lg transition-all duration-300 shadow-2xl shadow-green-500/30 hover:-translate-y-1 hover:shadow-green-400/50"
+          >
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+              ></path>
+            </svg>
+            Escribirnos por WhatsApp
+          </a>
+        </div>
+
+        <p class="text-white/30 text-sm mt-8">
+          📍 Nevado del Ruiz, Manizales · Caldas, Colombia
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════ -->
+    <footer class="bg-stone-900 pt-16 pb-8">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-10 mb-12">
+          <div class="md:col-span-1">
+            <div class="font-serif text-2xl font-bold text-white mb-1">Los Páramos</div>
+            <div class="font-serif text-lg text-green-400 mb-4">de Dios</div>
+            <p class="text-stone-400 text-sm leading-relaxed">
+              Una experiencia turística auténtica en el corazón del Nevado del Ruiz, Manizales,
+              Colombia. Naturaleza pura, cultura campesina y aventura.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-white font-semibold text-sm uppercase tracking-widest mb-5">
+              Navegación
+            </h4>
+            <ul class="space-y-2.5">
+              {
+                navLinks.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="text-stone-400 hover:text-green-400 text-sm transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white font-semibold text-sm uppercase tracking-widest mb-5">
+              Contacto
+            </h4>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors mb-5"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                ></path>
+              </svg>
+              Escribirnos
+            </a>
+            <p class="text-stone-500 text-sm">
+              📍 Nevado del Ruiz<br />
+              Manizales, Caldas, Colombia
+            </p>
+          </div>
+        </div>
+
+        <div class="border-t border-stone-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-stone-500 text-sm">
+          <p>© {new Date().getFullYear()} Los Páramos de Dios. Todos los derechos reservados.</p>
+          <p class="text-stone-600 text-xs">Manizales · Caldas · Colombia 🇨🇴</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
+<script>
+  // Navbar: cambio de fondo al hacer scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar?.classList.add('bg-green-950/95', 'backdrop-blur-md', 'shadow-lg', 'shadow-black/20');
+      navbar?.classList.remove('bg-transparent');
+    } else {
+      navbar?.classList.remove(
+        'bg-green-950/95',
+        'backdrop-blur-md',
+        'shadow-lg',
+        'shadow-black/20'
+      );
+      navbar?.classList.add('bg-transparent');
+    }
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  menuBtn?.addEventListener('click', () => {
+    const isHidden = mobileMenu?.classList.contains('hidden');
+    mobileMenu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+  });
+
+  // Cerrar menu mobile al hacer click en un enlace
+  document.querySelectorAll('#mobile-menu a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+
+  // ─── LIGHTBOX ────────────────────────────────────────────────
+  // Construir el array de imágenes leyendo los data-attributes del DOM
+  const galleryImages = Array.from(document.querySelectorAll('[data-lightbox-idx]'))
+    .sort(
+      (a, b) =>
+        parseInt((a as HTMLElement).dataset.lightboxIdx ?? '0') -
+        parseInt((b as HTMLElement).dataset.lightboxIdx ?? '0')
+    )
+    .map((btn) => ({
+      src: (btn as HTMLElement).dataset.lightboxSrc ?? '',
+      title: (btn as HTMLElement).dataset.lightboxTitle ?? '',
+      desc: (btn as HTMLElement).dataset.lightboxDesc ?? '',
+    }));
+
+  let lbCurrentIdx = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const lbTitle = document.getElementById('lb-title');
+  const lbDesc = document.getElementById('lb-desc');
+  const lbCounter = document.getElementById('lb-counter');
+
+  function lbUpdate() {
+    const item = galleryImages[lbCurrentIdx];
+    if (lbImg) { lbImg.src = item.src; lbImg.alt = item.title; }
+    if (lbTitle) lbTitle.textContent = item.title;
+    if (lbDesc) lbDesc.textContent = item.desc;
+    if (lbCounter) lbCounter.textContent = `${lbCurrentIdx + 1} / ${galleryImages.length}`;
+  }
+
+  function lbOpen(idx: number) {
+    lbCurrentIdx = idx;
+    lbUpdate();
+    lightbox?.classList.remove('hidden');
+    lightbox?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function lbClose() {
+    lightbox?.classList.add('hidden');
+    lightbox?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  // Abrir al hacer click en miniatura
+  document.querySelectorAll('[data-lightbox-idx]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt((btn as HTMLElement).dataset.lightboxIdx ?? '0');
+      lbOpen(idx);
+    });
+  });
+
+  // Cerrar
+  document.getElementById('lb-close')?.addEventListener('click', lbClose);
+  lightbox?.addEventListener('click', (e) => { if (e.target === lightbox) lbClose(); });
+
+  // Navegación
+  document.getElementById('lb-prev')?.addEventListener('click', () => {
+    lbCurrentIdx = (lbCurrentIdx - 1 + galleryImages.length) % galleryImages.length;
+    lbUpdate();
+  });
+  document.getElementById('lb-next')?.addEventListener('click', () => {
+    lbCurrentIdx = (lbCurrentIdx + 1) % galleryImages.length;
+    lbUpdate();
+  });
+
+  // Teclado
+  document.addEventListener('keydown', (e) => {
+    if (lightbox?.classList.contains('hidden')) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') {
+      lbCurrentIdx = (lbCurrentIdx - 1 + galleryImages.length) % galleryImages.length;
+      lbUpdate();
+    }
+    if (e.key === 'ArrowRight') {
+      lbCurrentIdx = (lbCurrentIdx + 1) % galleryImages.length;
+      lbUpdate();
+    }
+  });
+</script>
